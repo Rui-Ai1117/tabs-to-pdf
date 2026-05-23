@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabs to PDF</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-icon">📄</div>
+      <div>
+        <h1>Tabs to PDF</h1>
+        <p class="subtitle">複数タブを一括PDF化</p>
+      </div>
+    </div>
+
+    <!-- Mode Selector -->
+    <div class="mode-selector">
+      <button class="mode-btn active" id="modeAll" data-mode="all">
+        全タブ
+      </button>
+      <button class="mode-btn" id="modeSelected" data-mode="selected">
+        選択タブ
+      </button>
+      <button class="mode-btn" id="modeCurrent" data-mode="current">
+        現在のタブ
+      </button>
+    </div>
+
+    <!-- Tab List (for selected mode) -->
+    <div id="tabListSection" class="tab-list-section hidden">
+      <div class="section-header">
+        <span>タブを選択</span>
+        <div class="select-actions">
+          <button id="selectAll" class="text-btn">全選択</button>
+          <span class="divider">|</span>
+          <button id="selectNone" class="text-btn">解除</button>
+        </div>
+      </div>
+      <div id="tabList" class="tab-list"></div>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings-section">
+      <div class="settings-header" id="settingsToggle">
+        <span>⚙️ 設定</span>
+        <span class="toggle-icon" id="toggleIcon">▼</span>
+      </div>
+      <div id="settingsContent" class="settings-content">
+        <div class="setting-row">
+          <label>出力形式</label>
+          <select id="outputFormat">
+            <option value="separate">タブごとに個別PDF</option>
+            <option value="merged">1つのPDFに結合</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>用紙サイズ</label>
+          <select id="paperSize">
+            <option value="A4">A4</option>
+            <option value="Letter">Letter</option>
+            <option value="A3">A3</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>向き</label>
+          <select id="orientation">
+            <option value="portrait">縦 (Portrait)</option>
+            <option value="landscape">横 (Landscape)</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>背景を印刷</label>
+          <label class="toggle">
+            <input type="checkbox" id="printBackground" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <label>余白</label>
+          <select id="margins">
+            <option value="default">デフォルト</option>
+            <option value="none">なし</option>
+            <option value="minimum">最小</option>
+          </select>
+        </div>
+        <div class="setting-row" id="delayRow">
+          <label>タブ間の待機 (秒)</label>
+          <input type="number" id="delaySeconds" value="2" min="0" max="10" step="0.5">
+        </div>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div id="statusArea" class="status-area hidden">
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+      <p id="statusText" class="status-text">処理中...</p>
+    </div>
+
+    <!-- Action Button -->
+    <button id="convertBtn" class="convert-btn">
+      <span id="btnIcon">📥</span>
+      <span id="btnText">PDF に変換</span>
+    </button>
+
+    <!-- Result -->
+    <div id="resultArea" class="result-area hidden">
+      <div id="resultIcon" class="result-icon">✅</div>
+      <p id="resultText" class="result-text"></p>
+      <button id="resetBtn" class="text-btn reset-btn">もう一度</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
